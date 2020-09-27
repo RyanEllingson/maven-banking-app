@@ -22,7 +22,7 @@ public class UsersById {
 			BankDAOImpl bDao = new BankDAOImpl(conn);
 			ObjectMapper om = new ObjectMapper();
 			String[] params = req.getRequestURI().split("/");
-			User user = bDao.getUserById(Integer.parseInt(params[3]));
+			User user = bDao.getUserById(Integer.parseInt(params[2]));
 			HttpSession session = req.getSession(false);
 			User currentUser = null;
 			if (session == null) {
@@ -49,7 +49,7 @@ public class UsersById {
 			BankDAOImpl bDao = new BankDAOImpl(conn);
 			ObjectMapper om = new ObjectMapper();
 			String[] params = req.getRequestURI().split("/");
-			User user = bDao.getUserById(Integer.parseInt(params[3]));
+			User user = bDao.getUserById(Integer.parseInt(params[2]));
 			if (user.getUserId() == 0) {
 				res.getWriter().write(om.writeValueAsString(new Message("User doesn't exist")));
 			} else {

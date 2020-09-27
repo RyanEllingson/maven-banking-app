@@ -19,7 +19,7 @@ public class UsersByAccount {
 			BankDAOImpl bDao = new BankDAOImpl(conn);
 			ObjectMapper om = new ObjectMapper();
 			String[] params = req.getRequestURI().split("/");
-			List<User> users = bDao.getUsersByAccount(Integer.parseInt(params[4]));
+			List<User> users = bDao.getUsersByAccount(Integer.parseInt(params[3]));
 			res.getWriter().write(om.writeValueAsString(users));
 		} catch (Exception e) {
 			e.printStackTrace();

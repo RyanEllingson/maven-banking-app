@@ -22,7 +22,7 @@ public class AccountsByUser {
 			BankDAOImpl bDao = new BankDAOImpl(conn);
 			ObjectMapper om = new ObjectMapper();
 			String[] params = req.getRequestURI().split("/");
-			int userId = Integer.parseInt(params[4]);
+			int userId = Integer.parseInt(params[3]);
 			HttpSession session = req.getSession(false);
 			User currentUser = null;
 			if (session == null) {

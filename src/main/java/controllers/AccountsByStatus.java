@@ -30,7 +30,7 @@ public class AccountsByStatus {
 			} else {
 				currentUser = (User) session.getAttribute("user");
 				if (currentUser.getRole().getRoleId() == 1 || currentUser.getRole().getRoleId() == 2) {
-					List<Account> accounts = bDao.getAccountsByStatus(Integer.parseInt(params[4]));
+					List<Account> accounts = bDao.getAccountsByStatus(Integer.parseInt(params[3]));
 					res.setStatus(200);
 					res.getWriter().write(om.writeValueAsString(accounts));
 				} else {

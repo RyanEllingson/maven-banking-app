@@ -30,7 +30,7 @@ public class AccountsById {
 				res.getWriter().write(om.writeValueAsString(new Message("The requested action is not permitted")));
 			} else {
 				currentUser = (User) session.getAttribute("user");
-				Account account = bDao.getAccountById(Integer.parseInt(params[3]));
+				Account account = bDao.getAccountById(Integer.parseInt(params[2]));
 				List<User> users = bDao.getUsersByAccount(account.getAccountId());
 				boolean isMatch = false;
 				for (User user : users) {
@@ -57,7 +57,7 @@ public class AccountsById {
 			BankDAOImpl bDao = new BankDAOImpl(conn);
 			ObjectMapper om = new ObjectMapper();
 			String[] params = req.getRequestURI().split("/");
-			Account account = bDao.getAccountById(Integer.parseInt(params[3]));
+			Account account = bDao.getAccountById(Integer.parseInt(params[2]));
 			HttpSession session = req.getSession(false);
 			User currentUser = null;
 			if (session == null) {
