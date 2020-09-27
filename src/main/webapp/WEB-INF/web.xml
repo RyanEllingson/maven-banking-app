@@ -1,38 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
-  <display-name>rocp-project</display-name>
+  <display-name>maven-banking-app</display-name>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
   </welcome-file-list>
-  
-  <resource-ref>
-  	<description>postgreSQL Datasource example</description>
-  	<res-ref-name>jdbc/postgres</res-ref-name>
-  	<res-type>javax.sql.DataSource</res-type>
-  	<res-auth>Container</res-auth>
-  </resource-ref>
-  
-  <servlet>
-  	<servlet-name>MasterServlet</servlet-name>
-  	<servlet-class>com.bank.servlets.MasterServlet</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-  	<servlet-name>MasterServlet</servlet-name>
-  	<url-pattern>/accountlinks</url-pattern>
-  	<url-pattern>/accounts</url-pattern>
-  	<url-pattern>/accounts/*</url-pattern>
-  	<url-pattern>/currentuser</url-pattern>
-  	<url-pattern>/home</url-pattern>
-  	<url-pattern>/login</url-pattern>
-  	<url-pattern>/logout</url-pattern>
-  	<url-pattern>/passTime</url-pattern>
-  	<url-pattern>/register</url-pattern>
-  	<url-pattern>/roles</url-pattern>
-  	<url-pattern>/statuses</url-pattern>
-  	<url-pattern>/types</url-pattern>
-  	<url-pattern>/users</url-pattern>
-  	<url-pattern>/users/*</url-pattern>
-  </servlet-mapping>
-  
+
 </web-app>
