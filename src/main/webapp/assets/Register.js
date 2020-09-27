@@ -8,7 +8,7 @@ const app = function() {
     const registerBtnEl = document.getElementById("register-btn");
 
     const populateRoles = async function() {
-        const response = await axios.get("/rocp-project/roles");
+        const response = await axios.get("/roles");
         const roles = response.data;
     
         for (let i=0; i<3; i++) {
@@ -29,11 +29,11 @@ const app = function() {
             email: emailEl.value,
             roleId: roleEl.value
         };
-        const response = await axios.post("/rocp-project/register", user);
+        const response = await axios.post("/register", user);
         if (response.data.message) {
             console.log(response.data.message);
         } else {
-            window.location.replace("http://localhost:8080/rocp-project/home");
+            window.location.replace("https://maven-banking-app.herokuapp.com/home");
         }
     }
 

@@ -72,11 +72,11 @@ const app = function() {
     const loadPage = async function() {
         console.log("loading the page");
         currentUser = null;
-        const response = await axios.get("/rocp-project/currentuser");
+        const response = await axios.get("/currentuser");
         currentUser = response.data;
         console.log(currentUser);
         if (!currentUser) {
-            window.location.replace("http://localhost:8080/rocp-project/login");
+            window.location.replace("https://maven-banking-app.herokuapp.com/login");
         } else {
             nameEl.innerText = `Welcome ${currentUser.firstName} ${currentUser.lastName}!`;
             userIdEl.innerText =   `User Id: ${currentUser.userId}`;
@@ -126,7 +126,7 @@ const app = function() {
         adminContentEl.setAttribute("class", "row");
         userInfoEl.setAttribute("class", "row d-none");
         accountInfoEl.setAttribute("class", "row d-none");
-        const userResponse = await axios.get("/rocp-project/users");
+        const userResponse = await axios.get("/users");
         const users = userResponse.data;
         adminUserContainerEl.innerHTML = "";
         for (let user of users) {
@@ -204,7 +204,7 @@ const app = function() {
             roleEl.innerText = `Role: ${user.role.role}`;
             col6.append(roleEl);
         }
-        const accountResponse = await axios.get("/rocp-project/accounts");
+        const accountResponse = await axios.get("/accounts");
         const accounts = accountResponse.data;
         adminAccountContainerEl.innerHTML = "";
         for (let account of accounts) {
@@ -357,7 +357,7 @@ const app = function() {
         
 
         userInfoAccountHeaderEl.innerText = `Accounts for User Id ${user.userId}`;
-        const accountResponse = await axios.get(`/rocp-project/accounts/owner/${user.userId}`);
+        const accountResponse = await axios.get(`/accounts/owner/${user.userId}`);
         const accounts = accountResponse.data;
         userInfoAccountContainerEl.innerHTML = "";
         for (let account of accounts) {
@@ -426,7 +426,7 @@ const app = function() {
             newAccountCard.setAttribute("class", "card d-none");
         }
 
-        const statusResponse = await axios.get("/rocp-project/statuses");
+        const statusResponse = await axios.get("/statuses");
         const statuses = statusResponse.data;
         newAccountStatusEl.innerHTML = "";
         for (let status of statuses) {
@@ -436,7 +436,7 @@ const app = function() {
             newAccountStatusEl.append(statusOption);
         }
 
-        const typeResponse = await axios.get("/rocp-project/types");
+        const typeResponse = await axios.get("/types");
         const types = typeResponse.data;
         newAccountTypeEl.innerHTML = "";
         for (let type of types) {
@@ -461,7 +461,7 @@ const app = function() {
         accountInfoEl.setAttribute("class", "row");
         accountInfoUserHeaderEl.innerText = `Users for Account Id ${account.accountId}`;
         accountInfoUserContainerEl.innerHTML = "";
-        const userResponse = await axios.get(`/rocp-project/users/account/${account.accountId}`);
+        const userResponse = await axios.get(`/users/account/${account.accountId}`);
         const users = userResponse.data;
         for (let user of users) {
             const userContainer = document.createElement("li");
@@ -541,7 +541,7 @@ const app = function() {
         }
         accountInfoAccountHeaderEl.innerText = `Details for Account Id ${account.accountId}`;
         accountInfoBalanceEl.value = `$${(Math.round(account.balance * 100))/100}`;
-        const statusResponse = await axios.get("/rocp-project/statuses");
+        const statusResponse = await axios.get("/statuses");
         const statuses = statusResponse.data;
         accountInfoStatusEl.innerHTML = "";
         for (let status of statuses) {
@@ -636,7 +636,7 @@ const app = function() {
     const handleUpdateUser = async function(event, user) {
         event.preventDefault();
         try {
-            const response = axios.put("/rocp-project/users", {
+            const response = axios.put("/users", {
                 userId: user.userId,
                 username: userInfoUsernameEl.value,
                 password: userInfoPasswordEl.value,
@@ -650,7 +650,7 @@ const app = function() {
         }
         userInfoEl.setAttribute("class", "row d-none");
         if (user.userId === currentUser.userId) {
-            window.location.replace("http://localhost:8080/rocp-project/home");
+            window.location.replace("https://maven-banking-app.herokuapp.com/home");
         } else {
             loadPage();
         }
@@ -659,23 +659,23 @@ const app = function() {
     const handleDeleteUser = async function(event, user) {
         event.preventDefault();
         try {
-            const response = axios.delete(`/rocp-project/users/${user.userId}`);
+            const response = axios.delete(`/users/${user.userId}`);
         } catch (err) {
             console.log(err);
         }
         userInfoEl.setAttribute("class", "row d-none");
-        window.location.replace("http://localhost:8080/rocp-project/home");
+        window.location.replace("https://maven-banking-app.herokuapp.com/home");
     }
 
     const handleUpgradeUser = async function(event, user, accountId) {
         event.preventDefault();
-        const withdrawResponse = await axios.post("/rocp-project/accounts/withdraw", {
+        const withdrawResponse = await axios.post("/accounts/withdraw", {
             accountId,
             amount: 100
         });
         if (withdrawResponse.data.message) {
             const {userId, username, password, firstName, lastName, email} = user;
-            const updateResponse = await axios.put("/rocp-project/users", {
+            const updateResponse = await axios.put("/users", {
                 userId,
                 username,
                 password,
@@ -692,7 +692,7 @@ const app = function() {
     const handleAddAccount = async function(event, user, balance, statusId, typeId) {
         event.preventDefault();
         try {
-            const accountResponse = await axios.post("/rocp-project/accounts", {
+            const accountResponse = await axios.post("/accounts", {
                 balance,
                 statusId,
                 typeId
@@ -700,7 +700,7 @@ const app = function() {
             console.log(accountResponse);
             const userId = user.userId;
             const accountId = accountResponse.data.accountId;
-            const linkResponse = await axios.post("/rocp-project/accountlinks", {
+            const linkResponse = await axios.post("/accountlinks", {
                 userId,
                 accountId
             });
@@ -714,7 +714,7 @@ const app = function() {
     const handleUpdateAccount = async function(event, account) {
         event.preventDefault();
         try {
-            const response = await axios.put("/rocp-project/accounts", {
+            const response = await axios.put("/accounts", {
                 accountId: account.accountId,
                 balance: account.balance,
                 statusId: accountInfoStatusEl.value,
@@ -732,7 +732,7 @@ const app = function() {
     const handleDeleteAccount = async function(event, account) {
         event.preventDefault();
         try {
-            const response = axios.delete(`/rocp-project/accounts/${account.accountId}`);
+            const response = axios.delete(`/accounts/${account.accountId}`);
         } catch (err) {
             console.log(err);
         }
@@ -743,7 +743,7 @@ const app = function() {
     const handleDeposit = async function(event, accountId, amount) {
         event.preventDefault();
         try {
-            const response = await axios.post("/rocp-project/accounts/deposit", {
+            const response = await axios.post("/accounts/deposit", {
                 accountId,
                 amount
             });
@@ -757,7 +757,7 @@ const app = function() {
     const handleWithdraw = async function(event, accountId, amount) {
         event.preventDefault();
         try {
-            const response = await axios.post("/rocp-project/accounts/withdraw", {
+            const response = await axios.post("/accounts/withdraw", {
                 accountId,
                 amount
             });
@@ -771,7 +771,7 @@ const app = function() {
     const handleTransfer = async function(event, sourceAccountId, targetAccountId, amount) {
         event.preventDefault();
         try {
-            const response = await axios.post("/rocp-project/accounts/transfer", {
+            const response = await axios.post("/accounts/transfer", {
                 sourceAccountId,
                 targetAccountId,
                 amount
@@ -788,7 +788,7 @@ const app = function() {
         console.log("userId: " + userId);
         console.log("accountId: " + account.accountId);
         try {
-            const response = await axios.post("/rocp-project/accountlinks", {
+            const response = await axios.post("/accountlinks", {
                 userId,
                 accountId: account.accountId
             });
@@ -802,12 +802,12 @@ const app = function() {
 
     const handleLogout = async function(event) {
         event.preventDefault();
-        const response = await axios.post("/rocp-project/logout", {});
-        window.location.replace("http://localhost:8080/rocp-project/login");
+        const response = await axios.post("/logout", {});
+        window.location.replace("https://maven-banking-app.herokuapp.com/login");
     }
 
     const loadStatuses = async function() {
-        const statusResponse = await axios.get("/rocp-project/statuses");
+        const statusResponse = await axios.get("/statuses");
         const statuses = statusResponse.data;
         for (let status of statuses) {
             const statusOption = document.createElement("option");
@@ -820,7 +820,7 @@ const app = function() {
     const getAccountsByStatus = async function(event, statusId) {
         event.preventDefault();
         adminAccountContainerEl.innerHTML = "";
-        const accountResponse = await axios.get(`/rocp-project/accounts/status/${statusId}`);
+        const accountResponse = await axios.get(`/accounts/status/${statusId}`);
         const accounts = accountResponse.data;
         for (let account of accounts) {
             const accountContainer = document.createElement("li");
@@ -886,7 +886,7 @@ const app = function() {
     const passTime = async function(event) {
         event.preventDefault();
         try {
-            const response = await axios.post("/rocp-project/passTime", {
+            const response = await axios.post("/passTime", {
                 numOfMonths: passTimeEl.value
             });
         } catch (err) {
